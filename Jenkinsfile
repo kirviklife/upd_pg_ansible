@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('First') {
+        stage('Checkout') {
             steps {
-                echo 'Hello World'
+                git url: 'https://github.com/kirviklife/upd_pg_ansible.git', branch: 'main'
             }
         }
       
