@@ -9,7 +9,7 @@ pipeline {
 
         stage('Deploy Playbook') {
             steps {
-                ansiblePlaybook credentialsId: 'git_sign_ssh', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'apache-playbook.yml'
+                ansiblePlaybook credentialsId: 'git_sign_ssh', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'playbooks/test_playbook.yml'
             }
         }        
       
