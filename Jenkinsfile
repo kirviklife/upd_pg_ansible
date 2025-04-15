@@ -3,9 +3,15 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/kirviklife/upd_pg_ansible.git', branch: 'main'
+                git branch: 'main', credentialsId: 'git_sign_ssh', url: 'https://github.com/kirviklife/upd_pg_ansible.git'
             }
         }
+
+        stage('Deploy Playbook') {
+            steps {
+                ansiblePlaybook credentialsId: 'git_sign_ssh', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'apache-playbook.yml'
+            }
+        }        
       
         stage('Second') {
             steps {
