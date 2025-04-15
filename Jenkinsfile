@@ -1,4 +1,9 @@
 pipeline {
+    agent {
+     node {
+      label '192.168.56.102' 
+   }
+}
     stages {
         stage('First') {
             steps {
