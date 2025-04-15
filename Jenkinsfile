@@ -2,16 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('First') {
             steps {
-                // Checkout code from version control
-                sh 'echo hi'
+                echo 'Hello World'
             }
         }
-        stage('Deploy') {
+      
+        stage('Second') {
             steps {
-                // Deploy the application
-                sh 'echo bue'
+                echo 'This is Demo of Jenkins Pipeline Script from SCM'
+            }
+        }
+      
+        stage('Third') {
+            steps {
+                echo 'Last stage : blogoncode.com'
             }
         }
     }
