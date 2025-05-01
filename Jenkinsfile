@@ -11,6 +11,11 @@ pipeline {
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
+    node {
+  withBuildUser {
+    def user = env.BUILD_USER_ID
+  }
+}
     stages {
         stage('Wait for Approval') {
             steps {
