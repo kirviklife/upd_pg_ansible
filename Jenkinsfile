@@ -14,13 +14,25 @@ pipeline {
     
     stages {
         
-        stage('Wait for Approval') {
+        stage('Подтверждение') {
             steps {
                 script {
-                    def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
-                    echo "userName: ${cause.userName[0]}"
-                    timeout(time: 24, unit: 'HOURS') {
-                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "${cause.userName}"
+                    def currentUser = env.BUILD_USER_ID ?: env.USERNAME // Получаем ID текущего пользователя
+                    
+                    input message: 'Требуется одобрение',
+                          parameters: [
+                              choice(name: 'approve', choices: ['Да', 'Нет'], description: 'Выберите Да, чтобы продолжить'),
+                              string(name: 'confirmationUser', defaultValue: '', description: 'Укажите имя пользователя, подтверждающего действие')
+                          ],
+                          submitterParameter: 'submitter',
+                          ok: 'Продолжить'  
+                }
+                
+                script {
+                    if ("${params.submitter}" != "${currentUser}") { // Проверяем, подтвердил ли другой пользователь
+                        echo "Действие подтверждено пользователем ${params.submitter}"
+                    } else {
+                        error("Операция должна быть подтверждена другим пользователем")
                     }
                 }
             }
