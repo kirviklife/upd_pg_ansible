@@ -20,8 +20,10 @@ pipeline {
 
         stage('Deploy Playbook') {
             when {
-                equals expected: params.BUILD_TYPE, actual: 'debug'
-                equals expected: params.BUILD_TYPE, actual: 'Option A'
+                allOf {
+                    equals expected: params.BUILD_TYPE, actual: 'debug'
+                    equals expected: params.BUILD_TYPE, actual: 'Option A'
+                }
             }
             steps {
                 ansiblePlaybook credentialsId: 'SSH', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'playbooks/test_playbook.yml'
