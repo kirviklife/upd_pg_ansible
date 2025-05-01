@@ -22,7 +22,7 @@ pipeline {
                     def currentUser = timeout(time: 24, unit: 'HOURS') {
                         input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.',submitterParameter: 'APPROVER', submitter: "!${cause.userName[0]}"
                     }
-                    echo "Текущий пользователь: ${env.APPROVER}"
+                    echo "Текущий пользователь: ${manual_approval.APPROVER}"
                 }
             }
         }
