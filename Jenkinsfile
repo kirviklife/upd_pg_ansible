@@ -20,6 +20,7 @@ pipeline {
                     timeout(time: 24, unit: 'HOURS') {
                         input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}"
                     }
+                    echo "Текущий пользователь: ${currentUser}"
                 }
             }
         }
