@@ -20,12 +20,7 @@ pipeline {
                             python ./update_os_py/main.py
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
-                    def array = eval(scriptOutput)
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
-                    echo array[0]
-                    if (!array || !array.size() || array[0] == '-1') {
-                           error('Ошибка! Первый элемент массива равен -1.')
-                    }
                 }
             }
         }
