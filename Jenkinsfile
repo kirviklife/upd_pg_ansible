@@ -12,16 +12,22 @@ pipeline {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
     stages {
+        stage('Set Current User') {
+            steps {
+                script {
+                    wrap([$class: 'EnvInjectBuilderWrapper']) {
+                        def currentUser = currentBuild.rawBuild.getCulprit()?.fullName ?: 'Unknown'
+                        env.CURRENT_USER = currentUser
+                    }
+                }
+            }
+        }
         stage('Wait for Approval') {
             steps {
                 script {
-                    def currentUser = env.USERNAME ?: ""
-                    echo "Текущий пользователь: ${currentUser}"
-                    echo "Текущий пользователь: ${env.USERNAME}"
                     timeout(time: 24, unit: 'HOURS') {
-                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}"
+                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${env.CURRENT_USER}"
                     }
-                    echo "Текущий пользователь: ${currentUser}"
                 }
             }
         }
