@@ -17,11 +17,9 @@ pipeline {
         stage('Wait for Approval') {
             steps {
                 script {
-                    def currentUser = env.BUILD_USER_ID ?: ""
-                    echo "Текущий пользователь: ${currentUser}"
                     def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
                     echo "userName: ${cause.userName[0]}"
-                    timeout(time: 24, unit: 'HOURS') {
+                    def currentUser = timeout(time: 24, unit: 'HOURS') {
                         input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${cause.userName[0]}"
                     }
                     echo "Текущий пользователь: ${currentUser}"
