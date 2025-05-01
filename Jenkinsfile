@@ -5,15 +5,14 @@ properties([
               description: 'Choose an option.')
     ])
 ])
-options {
-  withBuildUser()
-}
 pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
-    
+    options {
+        withBuildUser()
+    }
     stages {
         
         stage('Подтверждение') {
