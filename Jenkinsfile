@@ -1,3 +1,11 @@
+properties([
+    parameters([
+        choice(name: 'CHOICE_PARAMETER',
+              choices: ['Option A', 'Option B'],
+              description: 'Choose an option.')
+    ])
+])
+
 pipeline {
     agent any
     stages {
@@ -19,7 +27,6 @@ pipeline {
                     def scriptOutput = sh(returnStdout: true, script: """
                             python ./update_os_py/main.py
                     """).trim()
-                    
                     def parsedArray = readJSON text: scriptOutput
                     // Проверяем первый элемент массива
                     if(parsedArray.getAt(0) == -1){
