@@ -15,11 +15,13 @@ pipeline {
       
         stage('Second') {
             steps {
-                def scriptOutput = sh(returnStdout: true, script: """
-                        python ./update_os_py/main.py '[0]' && echo "Success" || exit 1
-                """).trim()
-                env.SCRIPT_OUTPUT = scriptOutput
-                echo "Script output is ${env.SCRIPT_OUTPUT}"
+                script {
+                    def scriptOutput = sh(returnStdout: true, script: """
+                            python ./update_os_py/main.py '[0]' && echo "Success" || exit 1
+                    """).trim()
+                    env.SCRIPT_OUTPUT = scriptOutput
+                    echo "Script output is ${env.SCRIPT_OUTPUT}"
+                }
             }
         }
       
