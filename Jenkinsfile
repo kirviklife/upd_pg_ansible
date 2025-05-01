@@ -5,7 +5,9 @@ properties([
               description: 'Choose an option.')
     ])
 ])
-
+options {
+  withBuildUser()
+}
 pipeline {
     agent any
     parameters {
