@@ -12,6 +12,16 @@ pipeline {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
     stages {
+        stage('Wait for Approval') {
+            steps {
+                script {
+                    def currentUser = env.BUILDER_ID ?: ""
+                    timeout(time: 24, unit: 'HOURS') {
+                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitterParameter: 'APPROVER', submitter: '!currentUser'
+                    }
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 git branch: 'main', credentialsId: 'git_sign_ssh', url: 'https://github.com/kirviklife/upd_pg_ansible.git'
