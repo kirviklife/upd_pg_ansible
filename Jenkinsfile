@@ -5,33 +5,25 @@ properties([
               description: 'Choose an option.')
     ])
 ])
+
 pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
+    
     stages {
         
-        stage('Подтверждение') {
+        stage('Wait for Approval') {
             steps {
                 script {
-                    def currentUser = env.BUILD_USER_ID ?: env.USERNAME // Получаем ID текущего пользователя
-                    echo "${currentUser}"
-                    input message: 'Требуется одобрение',
-                          parameters: [
-                              choice(name: 'approve', choices: ['Да', 'Нет'], description: 'Выберите Да, чтобы продолжить'),
-                              string(name: 'confirmationUser', defaultValue: '', description: 'Укажите имя пользователя, подтверждающего действие')
-                          ],
-                          submitterParameter: 'submitter',
-                          ok: 'Продолжить'  
-                }
-                
-                script {
-                    if ("${params.submitter}" != "${currentUser}") { // Проверяем, подтвердил ли другой пользователь
-                        echo "Действие подтверждено пользователем ${params.submitter}"
-                    } else {
-                        error("Операция должна быть подтверждена другим пользователем")
+                    def currentUser = env.BUILD_USER_ID ?: ""
+                    echo "Текущий пользователь: ${currentUser}"
+                    echo "Текущий пользователь: ${env.BUILD_USER_ID}"
+                    timeout(time: 24, unit: 'HOURS') {
+                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}"
                     }
+                    echo "Текущий пользователь: ${currentUser}"
                 }
             }
         }
