@@ -17,6 +17,7 @@ pipeline {
                 script {
                     def currentUser = env.USERNAME ?: ""
                     echo "Текущий пользователь: ${currentUser}"
+                    echo "Текущий пользователь: ${env.USERNAME}"
                     timeout(time: 24, unit: 'HOURS') {
                         input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}"
                     }
