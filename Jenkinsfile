@@ -8,6 +8,9 @@ properties([
 
 pipeline {
     agent any
+    parameters {
+        string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -16,6 +19,9 @@ pipeline {
         }
 
         stage('Deploy Playbook') {
+            when {
+                equals expected: params.BUILD_TYPE, actual: 'debug'
+            }
             steps {
                 ansiblePlaybook credentialsId: 'SSH', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'playbooks/test_playbook.yml'
             }
