@@ -19,8 +19,14 @@ pipeline {
                     def scriptOutput = sh(returnStdout: true, script: """
                             python ./update_os_py/main.py
                     """).trim()
-                    def parsedArray = eval(scriptOutput)
-                    echo "Script output is ${parsedArray}"
+                    env.SCRIPT_OUTPUT = scriptOutput
+                    echo "Script output is ${env.SCRIPT_OUTPUT}"
+                    def parsedArray = scriptOutput.replace("[", "").replace("]", "").split(",").collect { it.trim().toInteger() }
+                    if(parsedArray[0] == -1){
+                        error("Ошибка: первый элемент массива равен -1")
+                    }else{
+                        echo "Первый элемент массива: ${parsedArray[0]}"
+                    }
                 }
             }
         }
