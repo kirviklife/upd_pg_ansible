@@ -21,7 +21,7 @@ pipeline {
                     echo "Текущий пользователь: ${currentUser}"
                     echo "Текущий пользователь: ${env.BUILD_USER_ID}"
                     timeout(time: 24, unit: 'HOURS') {
-                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}", ok: "Yes", submitterParameter "SUBMITTER_USERNAME"
+                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}", ok "Yes", submitterParameter "SUBMITTER_USERNAME"
                     }
                     echo "Текущий пользователь: ${currentUser}"
                     echo "Текущий пользователь: ${currentUser}"
