@@ -15,7 +15,7 @@ pipeline {
         stage('Wait for Approval') {
             steps {
                 script {
-                    echo "Текущий пользователь: ${currentUser}"
+                    echo "Текущий пользователь: ${env.BUILDER_ID}"
                     def currentUser = env.BUILDER_ID ?: ""
                     timeout(time: 24, unit: 'HOURS') {
                         input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}"
