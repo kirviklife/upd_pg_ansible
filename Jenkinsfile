@@ -26,7 +26,7 @@ pipeline {
                     if(parsedArray.getAt(0) == -1){
                         error("Ошибка: первый элемент массива равен -1")
                     }else{
-                        echo "Первый элемент массива: ${parsedArray.getAt(0)}"
+                        echo "Первый элемент массива: ${parsedArray}"
                     }
                 }
             }
