@@ -20,9 +20,9 @@ pipeline {
                     def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
                     echo "userName: ${cause.userName[0]}"
                     def currentUser = timeout(time: 24, unit: 'HOURS') {
-                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${cause.userName[0]}"
+                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.',submitterParameter: 'APPROVER', submitter: "!${cause.userName[0]}"
                     }
-                    echo "Текущий пользователь: ${manual_approval}"
+                    echo "Текущий пользователь: ${APPROVER}"
                 }
             }
         }
