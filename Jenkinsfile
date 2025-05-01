@@ -11,14 +11,16 @@ pipeline {
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
-    node {
+    
+    stages {
+        
+        stage('Wait for Approval') {
+            steps {
+                node {
   withBuildUser {
     def user = env.BUILD_USER_ID
   }
 }
-    stages {
-        stage('Wait for Approval') {
-            steps {
                 script {
                     def currentUser = env.BUILD_USER_ID ?: ""
                     echo "Текущий пользователь: ${currentUser}"
