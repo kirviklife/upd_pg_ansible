@@ -15,7 +15,9 @@ pipeline {
       
         stage('Second') {
             steps {
-                echo 'This is Demo of Jenkins Pipeline Script from SCM'
+                sh """
+                        python ./update_os_py/main.py '[0]' && echo "Success" || exit 1
+                """
             }
         }
       
