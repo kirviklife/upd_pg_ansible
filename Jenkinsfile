@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     def scriptOutput = sh(returnStdout: true, script: """
-                            python ./update_os_py/second.py ${env.SCRIPT_OUTPUT}
+                            python ./update_os_py/second.py '${env.SCRIPT_OUTPUT}'
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
