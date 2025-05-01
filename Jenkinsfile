@@ -22,7 +22,7 @@ pipeline {
                     echo "Текущий пользователь: ${env.BUILD_USER_ID}"
                     timeout(time: 24, unit: 'HOURS') {
                         def userInput = input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitterParameter: 'APPROVER', submitter: "!${currentUser}"
-                        env.userInput = userInput.APPROVER
+                        env.userInput = userInput
                     }
                     echo "Текущий пользователь: ${env.userInput}"
                     echo "Текущий пользователь: ${currentUser}"
