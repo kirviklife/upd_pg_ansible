@@ -21,11 +21,12 @@ pipeline {
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
-                    def parsedArray = scriptOutput.replace("[", "").replace("]", "").split(",").collect { it.trim().toInteger() }
-                    if(parsedArray[0] == -1){
+                    def parsedArray = readJSON text: scriptOutput
+                    // Проверяем первый элемент массива
+                    if(parsedArray.getAt(0) == -1){
                         error("Ошибка: первый элемент массива равен -1")
                     }else{
-                        echo "Первый элемент массива: ${parsedArray[0]}"
+                        echo "Первый элемент массива: ${parsedArray.getAt(0)}"
                     }
                 }
             }
