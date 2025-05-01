@@ -17,7 +17,7 @@ pipeline {
                 script {
                     def currentUser = env.BUILDER_ID ?: ""
                     timeout(time: 24, unit: 'HOURS') {
-                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitterParameter: 'APPROVER', submitter: '!currentUser'
+                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}"
                     }
                 }
             }
