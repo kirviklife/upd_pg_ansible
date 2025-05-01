@@ -22,7 +22,7 @@ pipeline {
             when {
                 allOf {
                     equals expected: params.BUILD_TYPE, actual: 'debug'
-                    equals expected: params.BUILD_TYPE, actual: 'Option A'
+                    equals expected: params.CHOICE_PARAMETER, actual: 'Option A'
                 }
             }
             steps {
