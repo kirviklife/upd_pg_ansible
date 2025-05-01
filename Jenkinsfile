@@ -24,6 +24,7 @@ pipeline {
                     // Проверяем первый элемент массива
                     if(parsedArray.getAt(0) == -1){
                         error("Ошибка: первый элемент массива равен -1")
+                        echo "Первый элемент массива: ${parsedArray.getAt(1)}"
                     }else{
                         env.SCRIPT_OUTPUT = scriptOutput
                         echo "Первый элемент массива: ${parsedArray.getAt(0)}"
