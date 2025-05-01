@@ -9,4 +9,4 @@ complex_array = [
 ]
 
 # Выводим массив в формате JSON
-print(json.dumps(complex_array))
+print(complex_array)
