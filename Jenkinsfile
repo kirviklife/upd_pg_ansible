@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     def scriptOutput = sh(returnStdout: true, script: """
-                            python ./update_os_py/main.py
+                            python3 ./update_os_py/main.py
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
                     def parsedArray = eval(scriptOutput)
