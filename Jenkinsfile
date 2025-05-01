@@ -21,8 +21,8 @@ pipeline {
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
-                    echo scriptOutput[0].toString().trim()
-                    echo scriptOutput[0].size() 
+                    echo scriptOutput[0]
+                    echo scriptOutput.size() 
                     if (!scriptOutput || !scriptOutput.size() || scriptOutput[0] == '-1') {
                            error('Ошибка! Первый элемент массива равен -1.')
                     }
