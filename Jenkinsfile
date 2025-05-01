@@ -10,9 +10,6 @@ pipeline {
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
-    options {
-        withBuildUser()
-    }
     stages {
         
         stage('Подтверждение') {
