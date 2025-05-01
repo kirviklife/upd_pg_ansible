@@ -20,6 +20,7 @@ pipeline {
                             python ./update_os_py/main.py
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
+                    def parsedArray = eval(scriptOutput)
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
                 }
             }
