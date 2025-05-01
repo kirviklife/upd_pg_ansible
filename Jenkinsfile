@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     def currentUser = env.BUILD_USER_ID ?: env.USERNAME // Получаем ID текущего пользователя
-                    
+                    echo "${currentUser}"
                     input message: 'Требуется одобрение',
                           parameters: [
                               choice(name: 'approve', choices: ['Да', 'Нет'], description: 'Выберите Да, чтобы продолжить'),
