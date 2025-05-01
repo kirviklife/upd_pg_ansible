@@ -12,19 +12,24 @@ pipeline {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
     stages {
-        stage('Wait for Approval') {
-            steps {
-                script {
-                    def currentUser = env.USERNAME ?: ""
-                    echo "Текущий пользователь: ${currentUser}"
-                    echo "Текущий пользователь: ${env.USERNAME}"
-                    timeout(time: 24, unit: 'HOURS') {
-                        input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitter: "!${currentUser}"
-                    }
-                    echo "Текущий пользователь: ${currentUser}"
-                }
-            }
+        stage('Ask for approval') {
+      steps {
+        input message: 'Do you approve?', submitter: 'user123'
+      }
+    }
+    stage('Check approval') {
+      steps {
+        script {
+          def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserName()
+          def approvalUser = input(id: 'approval', message: 'Approved by?', submitterParameter: 'approver')
+          if (buildUser == approvalUser) {
+            echo 'User who started the build is the same as the user who approved the input'
+          } else {
+            echo 'User who started the build is different from the user who approved the input'
+          }
         }
+      }
+    }
         stage('Checkout') {
             steps {
                 git branch: 'main', credentialsId: 'git_sign_ssh', url: 'https://github.com/kirviklife/upd_pg_ansible.git'
