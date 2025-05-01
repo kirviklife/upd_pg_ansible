@@ -21,7 +21,7 @@ pipeline {
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
-                    def parsedArray = readJSON text: scriptOutput
+                    def parsedArray = readJson text: scriptOutput
                     // Проверяем первый элемент массива
                     if(parsedArray.getAt(0) == -1){
                         error("Ошибка: первый элемент массива равен -1")
