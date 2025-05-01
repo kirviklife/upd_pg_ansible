@@ -24,8 +24,9 @@ pipeline {
                         def userInput = input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitterParameter: 'APPROVER', submitter: "!${currentUser}"
                         env.userInput = userInput
                     }
-                    echo "Текущий пользователь: ${env.userInput}"
-                    echo "Текущий пользователь: ${currentUser}"
+                    if(env.userInput == currentUser){
+                        error("Ошибка: нельзя согласовывать самому себе")
+                    }
                 }
             }
         }
