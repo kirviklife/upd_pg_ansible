@@ -19,13 +19,13 @@ pipeline {
                     def scriptOutput = sh(returnStdout: true, script: """
                             python ./update_os_py/main.py
                     """).trim()
-                    env.SCRIPT_OUTPUT = scriptOutput
-                    echo "Script output is ${env.SCRIPT_OUTPUT}"
                     def parsedArray = readJSON text: scriptOutput
                     // Проверяем первый элемент массива
                     if(parsedArray.getAt(0) == -1){
                         error("Ошибка: первый элемент массива равен -1")
                     }else{
+                        env.SCRIPT_OUTPUT = ${parsedArray.getAt(1)}
+                        echo "Script output is ${env.SCRIPT_OUTPUT}"
                         echo "Первый элемент массива: ${parsedArray.getAt(1)}"
                     }
                 }
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     def scriptOutput = sh(returnStdout: true, script: """
-                            python ./update_os_py/second.py "${parsedArray.getAt(1)}"
+                            python ./update_os_py/second.py "${env.SCRIPT_OUTPUT}"
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
