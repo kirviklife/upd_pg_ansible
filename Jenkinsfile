@@ -27,6 +27,9 @@ pipeline {
                     if(env.userInput == currentUser){
                         error("Ошибка: нельзя согласовывать самому себе")
                     }
+                    else{
+                        echo "Согласовано пользователем: ${env.userInput}"
+                    }
                 }
             }
         }
