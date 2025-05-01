@@ -19,7 +19,7 @@ pipeline {
                     def scriptOutput = sh(returnStdout: true, script: """
                             python ./update_os_py/main.py
                     """).trim()
-                    env.SCRIPT_OUTPUT = scriptOutput
+                    env.SCRIPT_OUTPUT = eval(scriptOutput)
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
                     echo env.SCRIPT_OUTPUT[0]
                     if (!scriptOutput || !scriptOutput.size() || scriptOutput[0] == '-1') {
