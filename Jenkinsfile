@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Получаем список файлов из YAML-файла
-                    def yamlContent = readYAML(file: './vars/all.yml')
+                    def yamlContent = readYaml(file: './vars/all.yml')
                     def fileNames = yamlContent['files']
 
                     // Формирование команд для создания чекбоксов
