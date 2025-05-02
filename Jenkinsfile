@@ -37,7 +37,8 @@ pipeline {
 
                     // Сообщение для отслеживания прогресса
                     echo "Generated temporary script."
-
+                    
+                    sh 'chmod +x ./generate_checkboxes.groovy'
                     // Выполняем скрипт для формирования dynamic parameters
                     sh './generate_checkboxes.groovy'
 
