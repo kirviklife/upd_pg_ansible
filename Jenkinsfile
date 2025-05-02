@@ -2,7 +2,15 @@ properties([
     parameters([
         choice(name: 'CHOICE_PARAMETER',
               choices: ['Option A', 'Option B'],
-              description: 'Choose an option.')
+              description: 'Choose an option.'),
+        choice(
+            name: 'CONFIG_FILE',
+            choices: [
+                // Динамическая загрузка имен файлов из YAML
+                loadYamlFilesFromWorkspace(),
+            ],
+            description: 'Choose the configuration file to be used.'
+        )
     ])
 ])
 
@@ -109,4 +117,12 @@ pipeline {
             }
         }
     }
+}
+
+
+// Функция для загрузки файлов из YAML
+def loadYamlFilesFromWorkspace() {
+    def workspacePath = "${env.JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/workspace/vars/all.yml"
+    def yamlContent = readFile(workspacePath)
+    return new groovy.json.JsonSlurperClassic().parseText(yamlContent)["files"] as List<String>
 }
