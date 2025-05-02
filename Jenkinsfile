@@ -10,18 +10,17 @@ pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
-        activeChoiceReactiveParam('SELECTED_FILES') {
-            description('Выберите файлы для обработки:')
-            choiceType('CHECKBOXES')
-            groovyScript {
-                script("""
-                    def yamlContent = readYAML(file: './vars/all.yml')
-                    def fileNames = yamlContent['files'].join('\n')
-                    return fileNames
-                """)
-                fallbackScript('"Ошибка при чтении файла."')
-            }
-        }
+        activeChoiceReactiveParameter(
+            name: 'SELECTED_FILES',
+            description: 'Выберите файлы для обработки:',
+            choiceType: 'CHECKBOXES',
+            groovyScript: """\
+                def yamlContent = readYAML(file: './vars/all.yml')
+                def fileNames = yamlContent['files'].join('\\n')
+                return fileNames
+            """,
+            fallbackScript: '"Ошибка при чтении файла."'
+        )
     }
     
     stages {
