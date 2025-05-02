@@ -1,6 +1,5 @@
 ---
 
 parameter1: 
- - host: 'host1'
- - id: '1'
+ - host: ['host1', '1']
 parameter2: value2
