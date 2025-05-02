@@ -1,4 +1,6 @@
 ---
 
-parameter1: value1
+parameter1: 
+ - host: 'host1'
+ - id: '1'
 parameter2: value2
