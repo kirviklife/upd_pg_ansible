@@ -14,7 +14,7 @@ pipeline {
             name: 'SELECTED_FILES',
             description: 'Выберите файлы для обработки:',
             choiceType: 'CHECKBOXES',
-            groovyScript: """\
+            script: """\
                 def yamlContent = readYAML(file: './vars/all.yml')
                 def fileNames = yamlContent['files'].join('\\n')
                 return fileNames
