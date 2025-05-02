@@ -2,15 +2,7 @@ properties([
     parameters([
         choice(name: 'CHOICE_PARAMETER',
               choices: ['Option A', 'Option B'],
-              description: 'Choose an option.'),
-        choice(
-            name: 'CONFIG_FILE',
-            choices: [
-                // Динамическая загрузка имен файлов из YAML
-                loadYamlFilesFromWorkspace(),
-            ],
-            description: 'Choose the configuration file to be used.'
-        )
+              description: 'Choose an option.')
     ])
 ])
 
