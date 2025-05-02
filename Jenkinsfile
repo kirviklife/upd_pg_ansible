@@ -99,7 +99,7 @@ pipeline {
                         println(content)
                     }
                     println(contentsArray)
-                    def jsonData = groovy.json.JsonOutput.toJson()
+                    def jsonData = groovy.json.JsonOutput.toJson(contentsArray)
                     def scriptOutput = sh(returnStdout: true, script: """
                             python ./update_os_py/from_yml.py '${jsonData}'
                     """).trim()
