@@ -17,33 +17,32 @@ pipeline {
         stage('Dynamic Checkbox Selection') {
             steps {
                 script {
-                    if (params.PROCESS_FILES) {
-                        // Получаем список файлов из YAML-файла
-                        def yamlContent = readYaml(file: './vars/all.yml')
-                        def fileNames = yamlContent['files']
+                    // Получаем список файлов из YAML-файла
+                    def yamlContent = readYAML(file: './vars/all.yml')
+                    def fileNames = yamlContent['files']
 
-                        // Генерируем команды bash для показа чекбоксов
-                        StringBuilder commandBuilder = new StringBuilder()
-                        fileNames.each { fileName ->
-                            commandBuilder.append("echo \"Select ${fileName}\"\n")
-                            commandBuilder.append("checkBox(\n")
-                            commandBuilder.append("    name: '${fileName}',\n")
-                            commandBuilder.append("    defaultValue: true,\n")
-                            commandBuilder.append("    description: 'Include this file'\n")
-                            commandBuilder.append(")\n\n")
-                        }
-
-                        // Создаем временный скрипт для генерации параметров
-                        writeFile(file: 'generate_checkboxes.groovy', text: commandBuilder.toString())
-
-                        // Выполняем скрипт для формирования dynamic parameters
-                        sh '''#!/bin/bash
-                          groovy generate_checkboxes.groovy
-                        '''
-
-                        // Удаляем временный файл
-                        deleteDir('generate_checkboxes.groovy')
+                    // Формирование команд для создания чекбоксов
+                    StringBuilder commandBuilder = new StringBuilder()
+                    fileNames.each { fileName ->
+                        commandBuilder.append("echo \"Select ${fileName}\"\n")
+                        commandBuilder.append("checkBox(\n")
+                        commandBuilder.append("    name: '${fileName}',\n")
+                        commandBuilder.append("    defaultValue: true,\n")
+                        commandBuilder.append("    description: 'Include this file'\n")
+                        commandBuilder.append(")\n\n")
                     }
+
+                    // Создаем временный скрипт для генерации параметров
+                    writeFile(file: 'generate_checkboxes.groovy', text: commandBuilder.toString())
+
+                    // Сообщение для отслеживания прогресса
+                    echo "Generated temporary script."
+
+                    // Выполняем скрипт для формирования dynamic parameters
+                    sh './generate_checkboxes.groovy'
+
+                    // Очистка временного файла
+                    deleteDir('generate_checkboxes.groovy')
                 }
             }
         }

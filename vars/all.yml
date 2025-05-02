@@ -1,8 +1,8 @@
 ---
 
 files:
-  - "cluster1"
-  - "cluster2"
+  - "cluster1.yml"
+  - "cluster2.yml"
 
 
 
