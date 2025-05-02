@@ -88,14 +88,14 @@ pipeline {
                     def workspacePath = pwd()
                     // Читаем файл filenames.yml, содержащий список остальных файлов
                     def files = readYaml(file: "${workspacePath}/vars/all.yml")
-                    def contentsArray = []
+                    def contentsArray = [0,[]]
                     // Проходим по каждому файлу и читаем его содержимое
                     for (def filename : files.files) {
                         echo "Reading ${filename}"
                         
                         // Читаем каждый указанный файл и выводим его содержимое
                         def content = readYaml(file: "${workspacePath}/vars/${filename}")
-                        contentsArray.add(content)
+                        contentsArray[1].add(content)
                         println(content)
                     }
                     println(contentsArray)
