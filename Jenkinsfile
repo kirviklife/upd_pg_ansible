@@ -19,7 +19,7 @@ pipeline {
                 script {
                     if (params.PROCESS_FILES) {
                         // Получаем список файлов из YAML-файла
-                        def yamlContent = readYAML(file: './vars/all.yml')
+                        def yamlContent = readYaml(file: './vars/all.yml')
                         def fileNames = yamlContent['files']
 
                         // Генерируем команды bash для показа чекбоксов
