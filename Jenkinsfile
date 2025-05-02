@@ -24,7 +24,7 @@ pipeline {
                         def userInput = input id: 'manual_approval', message: 'Требуется одобрение другим пользователем.', submitterParameter: 'APPROVER', submitter: "!${currentUser}"
                         env.userInput = userInput
                     }
-                    if(env.userInput == currentUser){
+                    if(env.userInput != currentUser){
                         error("Ошибка: нельзя согласовывать самому себе")
                     }
                     else{
@@ -79,6 +79,23 @@ pipeline {
                     """).trim()
                     env.SCRIPT_OUTPUT = scriptOutput
                     echo "Script output is ${env.SCRIPT_OUTPUT}"
+                }
+            }
+        }
+        stage('Read yml') {
+            steps {
+                script {
+                    // Читаем файл filenames.yml, содержащий список остальных файлов
+                    def files = readYAML(file: './vars/all.yml')
+                    
+                    // Проходим по каждому файлу и читаем его содержимое
+                    for (def filename : files.files) {
+                        echo "Reading ${filename}"
+                        
+                        // Читаем каждый указанный файл и выводим его содержимое
+                        def content = readYAML(file: './vars/'+filename)
+                        println(content)
+                    }
                 }
             }
         }

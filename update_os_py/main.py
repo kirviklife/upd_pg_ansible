@@ -1,21 +1,12 @@
-import requests
+import json
 
-# Токен API
-token = 'APY0SWVwIr9FwzOp1GQfTu5a9mPr68uWsrXcAXX2cZaWFwOWzSGCeFhLd2DQlopFpqpB1'
+complex_array = [
+    0,
+    [
+        {'id': '0', 'val1': 2, 'val2': 4},
+        {'id': '1', 'val1': 4, 'val2': 66}
+    ]
+]
 
-# Адрес API
-url = 'https://api.apyhub.com/data/dictionary/country'
-
-headers = {
-    'apy-token': token,
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-}
-
-
-response = requests.get(url, headers=headers, verify=False)
-
-if response.status_code == 200:
-    print([0, response.json()])
-else:
-    print([-1,'(%s) %s'%(response.status_code,response.text)])
+# Выводим массив в формате JSON
+print(complex_array)
