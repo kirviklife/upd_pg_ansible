@@ -14,11 +14,11 @@ pipeline {
             name: 'SELECTED_FILES',
             description: 'Выберите файлы для обработки:',
             choiceType: 'CHECKBOXES',
-            script: """\
-                def yamlContent = readYAML(file: './vars/all.yml')
+            script: new GroovyShell().evaluate("""\
+                def yamlContent = readYaml(file: './vars/all.yml')
                 def fileNames = yamlContent['files'].join('\\n')
                 return fileNames
-            """,
+            """.trim()),
             fallbackScript: '"Ошибка при чтении файла."'
         )
     }
