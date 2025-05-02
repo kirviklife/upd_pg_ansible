@@ -10,7 +10,7 @@ pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
-        activeChoiceReactiveParameter(
+        activeChoiceReactiveReferenceParameter(
             name: 'SELECTED_FILES',
             description: 'Выберите файлы для обработки:',
             choiceType: 'CHECKBOXES',
