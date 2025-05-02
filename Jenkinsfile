@@ -93,7 +93,7 @@ pipeline {
                         echo "Reading ${filename}"
                         
                         // Читаем каждый указанный файл и выводим его содержимое
-                        def content = readYAML(file: './vars/'+filename)
+                        def content = readYAML(file: filename)
                         println(content)
                     }
                 }
