@@ -24,26 +24,8 @@ pipeline {
                     // Формирование команд для создания чекбоксов
                     StringBuilder commandBuilder = new StringBuilder()
                     fileNames.each { fileName ->
-                        commandBuilder.append("echo \"Select ${fileName}\"\n")
-                        commandBuilder.append("checkBox(\n")
-                        commandBuilder.append("    name: '${fileName}',\n")
-                        commandBuilder.append("    defaultValue: true,\n")
-                        commandBuilder.append("    description: 'Include this file'\n")
-                        commandBuilder.append(")\n\n")
+                        parameters.add(new StringParameterDefinition(fileName, false, 'Description'))
                     }
-
-                    // Создаем временный скрипт для генерации параметров
-                    writeFile(file: 'generate_checkboxes.groovy', text: commandBuilder.toString())
-
-                    // Сообщение для отслеживания прогресса
-                    echo "Generated temporary script."
-                    
-                    sh 'chmod +x ./generate_checkboxes.groovy'
-                    // Выполняем скрипт для формирования dynamic parameters
-                    sh './generate_checkboxes.groovy'
-
-                    // Очистка временного файла
-                    deleteDir('generate_checkboxes.groovy')
                 }
             }
         }
