@@ -95,7 +95,7 @@ pipeline {
                         
                         // Читаем каждый указанный файл и выводим его содержимое
                         def content = readYaml(file: "${workspacePath}/vars/${filename}")
-                        contentsArray[1].add(content)
+                        contentsArray[1].add(content['parameter1'])
                         println(content)
                     }
                     println(contentsArray)
