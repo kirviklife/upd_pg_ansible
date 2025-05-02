@@ -1,5 +1,4 @@
 ---
 
-parameter1: 
- - host: ['host2', '2']
+parameter1: ['host2', '2']
 parameter2: value2
