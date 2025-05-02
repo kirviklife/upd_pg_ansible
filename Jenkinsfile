@@ -85,15 +85,16 @@ pipeline {
         stage('Read yml') {
             steps {
                 script {
+                    def workspacePath = pwd()
                     // Читаем файл filenames.yml, содержащий список остальных файлов
-                    def files = readYAML(file: './vars/all.yml')
+                    def files = readYAML(file: "${workspacePath}/vars/all.yml")
                     
                     // Проходим по каждому файлу и читаем его содержимое
                     for (def filename : files.files) {
                         echo "Reading ${filename}"
                         
                         // Читаем каждый указанный файл и выводим его содержимое
-                        def content = readYAML(file: filename)
+                        def content = readYAML(file: "${workspacePath}/vars/${filename}")
                         println(content)
                     }
                 }
