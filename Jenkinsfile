@@ -10,7 +10,18 @@ pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
-        booleanParam(name: 'PROCESS_FILES', defaultValue: false, description: 'Enable processing of specific files.')
+        activeChoiceReactiveParam('SELECTED_FILES') {
+            description('Выберите файлы для обработки:')
+            choiceType('CHECKBOXES')
+            groovyScript {
+                script("""
+                    def yamlContent = readYAML(file: './vars/all.yml')
+                    def fileNames = yamlContent['files'].join('\n')
+                    return fileNames
+                """)
+                fallbackScript('"Ошибка при чтении файла."')
+            }
+        }
     }
     
     stages {
@@ -22,7 +33,6 @@ pipeline {
                     def fileNames = yamlContent['files']
 
                     // Формирование команд для создания чекбоксов
-                    StringBuilder commandBuilder = new StringBuilder()
                     fileNames.each { fileName ->
                         parameters.add(new StringParameterDefinition(fileName, false, 'Description'))
                     }
