@@ -10,10 +10,43 @@ pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
+        booleanParam(name: 'PROCESS_FILES', defaultValue: false, description: 'Enable processing of specific files.')
     }
     
     stages {
-        
+        stage('Dynamic Checkbox Selection') {
+            steps {
+                script {
+                    if (params.PROCESS_FILES) {
+                        // Получаем список файлов из YAML-файла
+                        def yamlContent = readYAML(file: 'filenames.yml')
+                        def fileNames = yamlContent['files']
+
+                        // Генерируем команды bash для показа чекбоксов
+                        StringBuilder commandBuilder = new StringBuilder()
+                        fileNames.each { fileName ->
+                            commandBuilder.append("echo \"Select ${fileName}\"\n")
+                            commandBuilder.append("checkBox(\n")
+                            commandBuilder.append("    name: '${fileName}',\n")
+                            commandBuilder.append("    defaultValue: true,\n")
+                            commandBuilder.append("    description: 'Include this file'\n")
+                            commandBuilder.append(")\n\n")
+                        }
+
+                        // Создаем временный скрипт для генерации параметров
+                        writeFile(file: 'generate_checkboxes.groovy', text: commandBuilder.toString())
+
+                        // Выполняем скрипт для формирования dynamic parameters
+                        sh '''#!/bin/bash
+                          groovy generate_checkboxes.groovy
+                        '''
+
+                        // Удаляем временный файл
+                        deleteDir('generate_checkboxes.groovy')
+                    }
+                }
+            }
+        }
         stage('Wait for Approval') {
             steps {
                 script {
