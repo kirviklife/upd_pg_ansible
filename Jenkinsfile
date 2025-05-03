@@ -10,16 +10,6 @@ pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
-        activeChoice(
-            name: 'FRUIT',
-            description: 'Select your favorite fruit',
-            defaultProperty: 'DEFAULT_FRUIT',
-            groovyScript: '''
-                def yamlContent = readYAML(file: './vars/all.yml')
-                def fileNames = yamlContent['files'].join('\\n')
-                return fileNames
-            '''
-        )
     }
     
     stages {
