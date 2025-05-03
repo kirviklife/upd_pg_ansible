@@ -16,6 +16,37 @@ pipeline {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
     stages {
+        stage('Динамические параметры') {
+            steps {
+                script {
+                    // Исходный массив файлов
+                    def files = ['cluster1.yml', 'cluster2.yml']
+
+                    // Генерируем динамический список параметров (чекбоксов)
+                    def dynamicParams = [:]
+                    files.each { file ->
+                        dynamicParams.put(file, false) // Начальные значения - все false
+                    }
+
+                    // Запрашиваем у пользователя выбор параметров
+                    def userInput = input message: 'Выберите файлы для включения',
+                                          ok: 'Продолжить',
+                                          parameters: dynamicParams.collect { key, value ->
+                                              booleanParam(name: key, defaultValue: value)
+                                          }
+
+                    // Обрабатываем выбранные параметры
+                    echo "Выбранные файлы:"
+                    files.each { file ->
+                        if(userInput.get(file)) {
+                            echo "- $file включен"
+                        } else {
+                            echo "- $file выключен"
+                        }
+                    }
+                }
+            }
+        }
         stage('Wait for Approval') {
             steps {
                 script {
