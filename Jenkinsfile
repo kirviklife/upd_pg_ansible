@@ -137,7 +137,7 @@ pipeline {
                 script {
                     def workspacePath = pwd()
                     // Читаем файл filenames.yml, содержащий список остальных файлов
-                    def files = env.CLUSTER_CHECK
+                    def files = env.CLUSTER_CHECK.split(',')
                     def contentsArray = [0,[]]
                     // Проходим по каждому файлу и читаем его содержимое
                     for (def filename : files) {
