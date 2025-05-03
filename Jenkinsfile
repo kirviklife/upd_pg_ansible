@@ -1,14 +1,12 @@
-import hudson.model.ParameterValue;
-import hudson.model.ParametersAction;
-node{
-    def parameterDefs = []
-    parameterDefs.add(new BooleanParameterDefinition('cluster1', false, ''))
-    parameterDefs.add(new BooleanParameterDefinition('cluster2', false, ''))
-    parameterDefs.add(new ChoiceParameterDefinition( ['Option A', 'Option B'], 'Choose an option.','CHOICE_PARAMETER'))
 
-    properties([new ParametersDefinitionProperty(parameterDefs)])
-}
 
+properties([
+    parameters([
+        choice(name: 'CHOICE_PARAMETER',
+              choices: ['Option A', 'Option B'],
+              description: 'Choose an option.')
+    ])
+])
 
 
 
@@ -17,9 +15,7 @@ pipeline {
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
-    
     stages {
-        
         stage('Wait for Approval') {
             steps {
                 script {
