@@ -5,12 +5,7 @@ node {
     parameterDefs.add(new BooleanParameterDefinition('cluster2.yml', false, ''))
     parameterDefs.add(new ChoiceParameterDefinition('CHOICE_PARAMETER', ['Option A', 'Option B'], 'Choose an option.'))
 
-    properties([new ParametersDefinitionProperty(parameterDefs)])
-
-    stage('Проверка параметров') {
-        echo "Selected clusters: ${params.cluster1_yml}, ${params.cluster2_yml}"
-        echo "Selected choice: ${params.CHOICE_PARAMETER}"
-    }
+    properties([parameters(parameterDefs)])
 }
 
 
