@@ -9,7 +9,9 @@ pipeline {
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
     }
-    node {
+    
+    stages {
+        node {
     def configYaml = readYaml file: 'vars/all.yml'
     def checkboxes = []
     configYaml.files.each { filename ->
@@ -24,7 +26,6 @@ pipeline {
     ])
 ])
     }
-    stages {
         stage('Wait for Approval') {
             steps {
                 script {
