@@ -1,4 +1,4 @@
-def configYaml = readYAML file: './vars/all.yml'
+def configYaml = readYaml file: './vars/all.yml'
 def checkboxParams = []
 configYaml.files.each { paramEntry ->
     checkboxParams << booleanParam(
