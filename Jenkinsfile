@@ -26,7 +26,7 @@ pipeline {
                     def contentsArray = []
                     // Проходим по каждому файлу и читаем его содержимое
                     for (def filename : files_file.files) {
-                        contentsArray.add(filename)
+                        contentsArray.add("'${filename}'")
                     }
                     def files = contentsArray
 
