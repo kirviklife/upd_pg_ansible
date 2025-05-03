@@ -1,11 +1,7 @@
 def configYaml = readYaml file: './vars/all.yml'
-def checkboxParams = []
-configYaml.files.each { paramEntry ->
-    checkboxParams << booleanParam(
-        name: paramEntry,
-        defaultValue: false,
-        description: paramEntry
-    )
+def checkboxes = []
+configYaml.files.each { filename ->
+    checkboxes.add(booleanParam(name: filename, defaultValue: false))
 }
 
 properties([
@@ -13,7 +9,7 @@ properties([
         choice(name: 'CHOICE_PARAMETER',
               choices: ['Option A', 'Option B'],
               description: 'Choose an option.'),
-        checkboxParams
+        checkboxes
     ])
 ])
 
