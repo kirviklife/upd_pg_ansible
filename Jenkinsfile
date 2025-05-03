@@ -4,14 +4,7 @@ configYaml.files.each { filename ->
     checkboxes.add(booleanParam(name: filename, defaultValue: false))
 }
 
-properties([
-    parameters([
-        choice(name: 'CHOICE_PARAMETER',
-              choices: ['Option A', 'Option B'],
-              description: 'Choose an option.'),
-        checkboxes
-    ])
-])
+properties([parameters(checkboxes)])
 
 
 
