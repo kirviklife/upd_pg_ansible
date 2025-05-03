@@ -13,7 +13,6 @@ pipeline {
         activeChoice(
             name: 'FRUIT',
             description: 'Select your favorite fruit',
-            type: 'PT_SINGLE_SELECT',
             defaultProperty: 'DEFAULT_FRUIT',
             groovyScript: '''
                 def yamlContent = readYAML(file: './vars/all.yml')
