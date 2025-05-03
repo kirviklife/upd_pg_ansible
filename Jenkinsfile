@@ -2,7 +2,7 @@
     def parameterDefs = []
     parameterDefs.add(new BooleanParameterDefinition('cluster1', false, ''))
     parameterDefs.add(new BooleanParameterDefinition('cluster2', false, ''))
-    parameterDefs.add(new ChoiceParameterDefinition('CHOICE_PARAMETER', ['Option A', 'Option B'], 'Choose an option.'))
+    parameterDefs.add(new ChoiceParameterDefinition( ['Option A', 'Option B'], 'Choose an option.','CHOICE_PARAMETER'))
 
     properties([new ParametersDefinitionProperty(parameterDefs)])
 
