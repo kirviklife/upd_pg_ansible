@@ -1,12 +1,11 @@
 
-node {
     def parameterDefs = []
     parameterDefs.add(new BooleanParameterDefinition('cluster1', false, ''))
     parameterDefs.add(new BooleanParameterDefinition('cluster2', false, ''))
     parameterDefs.add(new ChoiceParameterDefinition('CHOICE_PARAMETER', ['Option A', 'Option B'], 'Choose an option.'))
 
     properties([new ParametersDefinitionProperty(parameterDefs)])
-}
+
 
 
 
