@@ -1,16 +1,17 @@
 
 node {
-    def configYaml = readYaml file: 'vars/all.yml'
-    def checkboxes = []
-    configYaml.files.each { filename ->
-        checkboxes.add(booleanParam(name: filename, defaultValue: false))
+    def parameterDefs = []
+    parameterDefs.add(new BooleanParameterDefinition('cluster1.yml', false, ''))
+    parameterDefs.add(new BooleanParameterDefinition('cluster2.yml', false, ''))
+    parameterDefs.add(new ChoiceParameterDefinition('CHOICE_PARAMETER', ['Option A', 'Option B'], 'Choose an option.'))
+
+    properties([new ParametersDefinitionProperty(parameterDefs)])
+
+    stage('Проверка параметров') {
+        echo "Selected clusters: ${params.cluster1_yml}, ${params.cluster2_yml}"
+        echo "Selected choice: ${params.CHOICE_PARAMETER}"
     }
-    properties([
-    parameters([
-        checkboxes
-    ])
-])
-    }
+}
 
 
 
