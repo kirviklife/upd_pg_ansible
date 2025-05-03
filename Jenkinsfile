@@ -48,7 +48,7 @@ pipeline {
                     files.each { file ->
                         if(userInput.get(file)) {
                             echo "- $file включен"
-                            vibor.add("'${file}'")
+                            vibor.add("${file}")
                         } else {
                             echo "- $file выключен"
                         }
