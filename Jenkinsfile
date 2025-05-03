@@ -26,7 +26,7 @@ pipeline {
                     def contentsArray = []
                     // Проходим по каждому файлу и читаем его содержимое
                     for (def filename : files_file.files) {
-                        contentsArray.add("'${filename}'")
+                        contentsArray.add(filename)
                     }
                     def files = contentsArray
 
@@ -48,7 +48,7 @@ pipeline {
                     files.each { file ->
                         if(userInput.get(file)) {
                             echo "- $file включен"
-                            vibor.add(file)
+                            vibor.add("'${file}'")
                         } else {
                             echo "- $file выключен"
                         }
