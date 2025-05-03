@@ -44,17 +44,16 @@ pipeline {
                                           }
 
                     // Обрабатываем выбранные параметры
-                    echo "Выбранные файлы:"
-                    env.CLUSTER_CHECK = []
+                    def vibor = []
                     files.each { file ->
                         if(userInput.get(file)) {
                             echo "- $file включен"
-                            env.CLUSTER_CHECK.add(file)
+                            vibor.add(file)
                         } else {
                             echo "- $file выключен"
                         }
                     }
-
+                    env.CLUSTER_CHECK = vibor
                 }
             }
         }
