@@ -1,10 +1,19 @@
-def configYaml = readYaml file: 'vars/all.yml'
-def checkboxes = []
-configYaml.files.each { filename ->
-    checkboxes.add(booleanParam(name: filename, defaultValue: false))
+node {
+    def configYaml = readYaml file: 'vars/all.yml'
+    def checkboxes = []
+    configYaml.files.each { filename ->
+        checkboxes.add(booleanParam(name: filename, defaultValue: false))
+    }
 }
 
-properties([parameters(checkboxes)])
+properties([
+    parameters([
+        choice(name: 'CHOICE_PARAMETER',
+              choices: ['Option A', 'Option B'],
+              description: 'Choose an option.'),
+        checkboxes
+    ])
+])
 
 
 
