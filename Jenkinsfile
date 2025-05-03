@@ -137,10 +137,10 @@ pipeline {
                 script {
                     def workspacePath = pwd()
                     // Читаем файл filenames.yml, содержащий список остальных файлов
-                    def files = readYaml(file: "${workspacePath}/vars/all.yml")
+                    def files = env.CLUSTER_CHECK
                     def contentsArray = [0,[]]
                     // Проходим по каждому файлу и читаем его содержимое
-                    for (def filename : files.files) {
+                    for (def filename : files) {
                         echo "Reading ${filename}"
                         
                         // Читаем каждый указанный файл и выводим его содержимое
