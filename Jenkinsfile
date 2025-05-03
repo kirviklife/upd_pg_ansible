@@ -52,6 +52,25 @@ pipeline {
                             echo "- $file выключен"
                         }
                     }
+                    currentBuild.description = "Выбранные файлы: ${userInput}"
+                }
+            }
+        }
+        stage('Обработка выбранных файлов') {
+            steps {
+                script {
+                    // Доступ к ранее выбранным данным
+                    def chosenFiles = currentBuild.description.tokenize(':')[1].trim()
+
+                    // Разделяем список выбранных файлов и работаем с ним
+                    def processedFiles = chosenFiles.split(',')
+
+                    echo "Выбранные файлы для обработки: ${processedFiles.join(', ')}"
+
+                    // Теперь обработайте выбранные файлы в вашей логике
+                    processedFiles.each { file ->
+                        echo "Обрабатываю файл: ${file.trim()}"
+                    }
                 }
             }
         }
