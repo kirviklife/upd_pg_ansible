@@ -1,4 +1,4 @@
-def configYaml = readYaml file: './vars/all.yml'
+def configYaml = readYaml file: 'vars/all.yml'
 def checkboxes = []
 configYaml.files.each { filename ->
     checkboxes.add(booleanParam(name: filename, defaultValue: false))
