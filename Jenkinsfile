@@ -10,16 +10,16 @@ pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
-        activeChoice(
-            name: 'SELECTED_FILES',
-            description: 'Выберите файлы для обработки:',
-            choiceType: 'CHECKBOXES',
-            script: new GroovyShell().evaluate("""\
-                def yamlContent = readYaml(file: './vars/all.yml')
+        extendedChoice(
+            name: 'FRUIT',
+            description: 'Select your favorite fruit',
+            type: 'PT_SINGLE_SELECT',
+            defaultProperty: 'DEFAULT_FRUIT',
+            groovyScript: '''
+                def yamlContent = readYAML(file: './vars/all.yml')
                 def fileNames = yamlContent['files'].join('\\n')
                 return fileNames
-            """.trim()),
-            fallbackScript: '"Ошибка при чтении файла."'
+            '''
         )
     }
     
