@@ -1,8 +1,8 @@
 
 node {
     def parameterDefs = []
-    parameterDefs.add(new BooleanParameterDefinition('cluster1.yml', false, ''))
-    parameterDefs.add(new BooleanParameterDefinition('cluster2.yml', false, ''))
+    parameterDefs.add(new BooleanParameterDefinition('cluster1', false, ''))
+    parameterDefs.add(new BooleanParameterDefinition('cluster2', false, ''))
     parameterDefs.add(new ChoiceParameterDefinition('CHOICE_PARAMETER', ['Option A', 'Option B'], 'Choose an option.'))
 
     properties([parameters(parameterDefs)])
