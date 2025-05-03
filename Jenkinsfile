@@ -1,10 +1,23 @@
+def configYaml = readYAML file: './vars/all.yml'
+def checkboxParams = []
+configYaml.files.each { paramEntry ->
+    checkboxParams << booleanParam(
+        name: paramEntry,
+        defaultValue: false,
+        description: paramEntry
+    )
+}
+
 properties([
     parameters([
         choice(name: 'CHOICE_PARAMETER',
               choices: ['Option A', 'Option B'],
-              description: 'Choose an option.')
+              description: 'Choose an option.'),
+        checkboxParams
     ])
 ])
+
+
 
 pipeline {
     agent any
