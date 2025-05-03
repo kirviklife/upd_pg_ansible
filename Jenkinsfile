@@ -20,7 +20,15 @@ pipeline {
             steps {
                 script {
                     // Исходный массив файлов
-                    def files = ['cluster1.yml', 'cluster2.yml']
+                    def workspacePath = pwd()
+                    // Читаем файл filenames.yml, содержащий список остальных файлов
+                    def files = readYaml(file: "${workspacePath}/vars/all.yml")
+                    def contentsArray = []
+                    // Проходим по каждому файлу и читаем его содержимое
+                    for (def filename : files.files) {
+                        contentsArray.add(filename)
+                    }
+                    def files = contentsArray
 
                     // Генерируем динамический список параметров (чекбоксов)
                     def dynamicParams = [:]
