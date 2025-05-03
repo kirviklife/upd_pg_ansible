@@ -13,20 +13,6 @@ pipeline {
     }
     
     stages {
-        stage('Dynamic Checkbox Selection') {
-            steps {
-                script {
-                    // Получаем список файлов из YAML-файла
-                    def yamlContent = readYaml(file: './vars/all.yml')
-                    def fileNames = yamlContent['files']
-
-                    // Формирование команд для создания чекбоксов
-                    fileNames.each { fileName ->
-                        parameters.add(new StringParameterDefinition(fileName, false, 'Description'))
-                    }
-                }
-            }
-        }
         stage('Wait for Approval') {
             steps {
                 script {
