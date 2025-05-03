@@ -10,7 +10,7 @@ pipeline {
     agent any
     parameters {
         string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
-        extendedChoice(
+        activeChoice(
             name: 'FRUIT',
             description: 'Select your favorite fruit',
             type: 'PT_SINGLE_SELECT',
