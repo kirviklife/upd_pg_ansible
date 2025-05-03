@@ -7,9 +7,6 @@ node {
     }
     properties([
     parameters([
-        choice(name: 'CHOICE_PARAMETER',
-              choices: ['Option A', 'Option B'],
-              description: 'Choose an option.'),
         checkboxes
     ])
 ])
