@@ -22,10 +22,10 @@ pipeline {
                     // Исходный массив файлов
                     def workspacePath = pwd()
                     // Читаем файл filenames.yml, содержащий список остальных файлов
-                    def files = readYaml(file: "${workspacePath}/vars/all.yml")
+                    def files_file = readYaml(file: "${workspacePath}/vars/all.yml")
                     def contentsArray = []
                     // Проходим по каждому файлу и читаем его содержимое
-                    for (def filename : files.files) {
+                    for (def filename : files_file.files) {
                         contentsArray.add(filename)
                     }
                     def files = contentsArray
