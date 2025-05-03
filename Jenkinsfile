@@ -53,7 +53,7 @@ pipeline {
                             echo "- $file выключен"
                         }
                     }
-                    env.CLUSTER_CHECK = vibor
+                    env.CLUSTER_CHECK = vibor.join(',')
                 }
             }
         }
