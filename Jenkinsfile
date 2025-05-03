@@ -1,17 +1,5 @@
 
-
-
-
-
-
-pipeline {
-    agent any
-    parameters {
-        string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
-    }
-    
-    stages {
-        node {
+node {
     def configYaml = readYaml file: 'vars/all.yml'
     def checkboxes = []
     configYaml.files.each { filename ->
@@ -26,6 +14,18 @@ pipeline {
     ])
 ])
     }
+
+
+
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'BUILD_TYPE', defaultValue: '', description: 'Тип сборки')
+    }
+    
+    stages {
+        
         stage('Wait for Approval') {
             steps {
                 script {
