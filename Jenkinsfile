@@ -4,7 +4,7 @@ node {
     configYaml.files.each { filename ->
         checkboxes.add(booleanParam(name: filename, defaultValue: false))
     }
-}
+
 
 properties([
     parameters([
@@ -120,5 +120,5 @@ pipeline {
         }
     }
 }
-
+}
 
